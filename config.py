@@ -25,7 +25,7 @@ config = Configuration(
     # A list of regexes. If a device's name matches any of the
     # regexes below, BLELog will attempt to connect to it:
     connect_device_name_regexes=[
-        # r'FancyBluetoothGadget'
+        r'ETH_BLE'
     ],
 
     # Device nicknames:
@@ -42,11 +42,11 @@ config = Configuration(
         Characteristic(
             # A name to identify the characteristics by:
             # Has to be unique.
-            name='demo_char',
+            name='demo_char_data',
 
             # UUID:
             # Has to be unique.
-            uuid='182281a8-153a-11ec-82a8-0242ac130001',
+            uuid='00002222-8e22-4541-9d4c-21edae82ed19',
 
             # Timeout (in seconds) for this characteristics:
             # If no notifications are received after this amount
@@ -58,12 +58,20 @@ config = Configuration(
             # Produces a list data-rows from the received bytearray Defined in
             # char_decoders.py
             # See `char_decoders.py` for more infos.
-            data_decoder=decode_demo_char,
+            data_decoder=decode_demo_char_data,
 
             # Column names for the information returned by the decoder function:
             # See `char_decoders.py` for more infos.
             column_headers=['idx', 'data']
 
+        ),
+        
+        Characteristic(
+            name='demo_char_btn',
+            uuid='00002223-8e22-4541-9d4c-21edae82ed19',
+            timeout=None,
+            data_decoder=decode_demo_char_btn,
+            column_headers=['data']
         ),
 
         # ... Additional characteristics

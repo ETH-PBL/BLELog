@@ -5,7 +5,7 @@ Characteristic data decoding.
 BLELog
 Copyright (C) 2024 Philipp Schilk
 
-This work is licensed under the terms of the MIT license.  For a copy, see the 
+This work is licensed under the terms of the MIT license.  For a copy, see the
 included LICENSE file or <https://opensource.org/licenses/MIT>.
 ---------------------------------
 
@@ -113,8 +113,8 @@ import struct
 from typing import Any, List
 
 
-def decode_demo_char(data: bytearray) -> List[List[Any]]:
-    # Each notification consists of 50 readings, with each
+def decode_demo_char_data(data: bytearray) -> List[List[Any]]:
+    # Each notification consists of 40 readings, with each
     # reading made up of a 16-bit little-endian unsigned index
     # and a 16-bit little-endian signed value.
     # The columns are configured as follows in config.py:
@@ -126,14 +126,14 @@ def decode_demo_char(data: bytearray) -> List[List[Any]]:
     log = logging.getLogger('log')
 
     # Validate data length:
-    if len(data) != 200:
+    if len(data) != 180:
         log.warning('Malformed demo data, rejecting...')
         return []
 
     # Decode:
     result = []
 
-    for i in range(50):
+    for i in range(40):
         # Grab 4 bytes for sample at position i
         row_bytes = data[4*i:4*i+4]
         # Decode:
@@ -142,3 +142,16 @@ def decode_demo_char(data: bytearray) -> List[List[Any]]:
         result.append([idx_val, data_val])
 
     return result
+
+
+def decode_demo_char_btn(data: bytearray) -> List[List[Any]]:
+    # Logger:
+    log = logging.getLogger('log')
+
+    # Validate data length:
+    if len(data) != 1:
+        log.warning('Malformed demo btn, rejecting...')
+        return []
+
+    # Decode:
+    return [[int.from_bytes(data, byteorder='big')]]

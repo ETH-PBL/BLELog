@@ -102,8 +102,9 @@ def plot(data_queue: mp.Queue):
     # Setup deques to hold data that will be plotted:
     # 'maxlen' controls the maximum number of data points shown.
     data_dqs = {
-        'demo_idx': deque(maxlen=300),
-        'demo_data': deque(maxlen=300),
+        'demo_data_idx': deque(maxlen=3000),
+        'demo_data': deque(maxlen=3000),
+        'demo_btn': deque(maxlen=300),
     }
 
     # Animation function called repeatedly by matplotlib.
@@ -132,10 +133,13 @@ def plot(data_queue: mp.Queue):
                 # Process each notification and put the data into the
                 # correct deques:
                 # 'notif_data.data' contains the return value of the char decoder function.
-                if notif_data.characteristic.name == "demo_char":
+                if notif_data.characteristic.name == "demo_char_data":
                     for row in notif_data.data:
-                        data_dqs['demo_idx'].append(row[0])
+                        data_dqs['demo_data_idx'].append(row[0])
                         data_dqs['demo_data'].append(row[1])
+                elif notif_data.characteristic.name == "demo_char_btn":
+                    for row in notif_data.data:
+                        data_dqs['demo_btn'].append(row[0])
                 # elif notif_data.characteristic.name == "some other char"
                 # ...
                 else:
@@ -149,12 +153,12 @@ def plot(data_queue: mp.Queue):
             ax.clear()
 
         # titles
-        ax1.set_title("Demo Characteristic: 'Data' Column")
-        ax2.set_title("Demo Characteristic: 'Idx' Column")
+        ax1.set_title("Demo Characteristic: 'Data'")
+        ax2.set_title("Demo Characteristic: 'Btn'")
 
         # plot data
-        ax1.plot(data_dqs['demo_data'], linewidth=0.5, label="red")
-        ax2.plot(data_dqs['demo_idx'], linewidth=0.5, label="red")
+        ax1.plot(data_dqs['demo_data_idx'], data_dqs['demo_data'], linewidth=0.5, label="red")
+        ax2.plot(data_dqs['demo_btn'], linewidth=0.5, label="red")
 
         # adjust layout
         fig1.tight_layout()
