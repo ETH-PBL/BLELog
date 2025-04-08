@@ -101,7 +101,7 @@ config = Configuration(
     scan_duration=3,
 
     # Time, in seconds, to pause between scans:
-    scan_cooldown=0.1,
+    scan_cooldown=3,
 
     # Last-seen timeout:
     # BLElog will only attempt to connect to a device if it has been
