@@ -60,6 +60,10 @@ class Configuration:
     plotter_exit_on_plot_close: bool
     throughput_period_s: float
 
+    log2sqlite_enabled: bool
+    log2sqlite_db_path: str
+    log2sqlite_batch_size: int
+
     # General settings:
     log_file: str
     plain_ascii_tui: bool

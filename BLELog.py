@@ -21,6 +21,7 @@ import config
 from blelog.ConnectionMgr import ConnectionMgr
 from blelog.ConsumerMgr import ConsumerMgr
 from blelog.consumers.log2csv import Consumer_log2csv
+from blelog.consumers.log2sqlite import Consumer_log2sqlite
 from blelog.consumers.plotter import Consumer_plotter
 from blelog.consumers.throughput import Consumer_throughput
 from blelog.curses_tui_components.Connections_TUI import Connections_TUI
@@ -46,6 +47,10 @@ async def main():
     if configuration.log2csv_enabled:
         consume_log2csv = Consumer_log2csv(configuration)
         consume_mgr.add_consumer(consume_log2csv)
+
+    if configuration.log2sqlite_enabled:
+        consume_log2sqlite = Consumer_log2sqlite(configuration)
+        consume_mgr.add_consumer(consume_log2sqlite)
 
     consume_plot = Consumer_plotter(configuration)
     consume_mgr.add_consumer(consume_plot)

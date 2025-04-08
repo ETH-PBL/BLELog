@@ -4,3 +4,4 @@ wcwidth==0.2.13
 aiofiles==24.1.0
 matplotlib==3.9.1
 numpy==2.0.0
+aiosqlite==0.21.0

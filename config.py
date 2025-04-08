@@ -118,6 +118,15 @@ config = Configuration(
     # fail. BLElog will *not* attempt to create it!
     log2csv_folder_name="output_csv",
 
+    # Enable/disable logging of data to SQlite DB:
+    log2sqlite_enabled=True,
+
+    # DB name:
+    log2sqlite_db_path="data.db3",
+
+    # Limit batch size to avoid huge memory usage if producer is very fast
+    log2sqlite_batch_size=1000,
+
     # Automatically open the data plot GUI on startup:
     # Useful in 'CONSOLE' tui mode, as the plotter cannot
     # be manually opened.
